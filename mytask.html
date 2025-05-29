@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dev360</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+
+    tailwind.config = {
+      darkMode: 'class'
+    };
+  </script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen flex">
+
+
+<button id="toggleSidebar" class="md:hidden fixed top-4 left-4 z-50 p-2 rounded bg-[#031A4C] text-white">
+  ☰
+</button>
+
+
+<aside id="sidebar" class="w-64 bg-[#031A4C] text-white dark:bg-gray-800 dark:text-gray-200 border-r border-white dark:border-gray-700 flex flex-col fixed top-0 left-0 bottom-0 z-40 transform -translate-x-full transition-transform duration-300 md:translate-x-0">
+  <div class="p-6 text-2xl font-bold border-b border-white dark:border-gray-700">
+    Dev360
+  </div>
+  <nav class="flex-grow overflow-y-auto" aria-label="Sidebar Navigation">
+    <ul class="mt-4 space-y-1">
+      <li><a href="#" class="flex items-center px-6 py-3 hover:bg-blue-700 dark:hover:bg-gray-700 rounded-md font-semibold">Dashboard</a></li>
+      <li><a href="#" class="flex items-center px-6 py-3 hover:bg-blue-700 dark:hover:bg-gray-700 rounded-md">My Tasks</a></li>
+      <li><a href="#" class="flex items-center px-6 py-3 hover:bg-blue-700 dark:hover:bg-gray-700 rounded-md">Submit Updates</a></li>
+      <li><a href="#" class="flex items-center px-6 py-3 hover:bg-blue-700 dark:hover:bg-gray-700 rounded-md">Project Tracker</a></li>
+      <li><a href="#" class="flex items-center px-6 py-3 hover:bg-blue-700 dark:hover:bg-gray-700 rounded-md">Knowledge Base</a></li>
+      <li><a href="#" class="flex items-center px-6 py-3 hover:bg-blue-700 dark:hover:bg-gray-700 rounded-md">Messages / Chat</a></li>
+      <li><a href="#" class="flex items-center px-6 py-3 hover:bg-blue-700 dark:hover:bg-gray-700 rounded-md">Reports</a></li>
+      <li><a href="#" class="flex items-center px-6 py-3 hover:bg-blue-700 dark:hover:bg-gray-700 rounded-md">Profile / Settings</a></li>
+    </ul>
+  </nav>
+</aside>    
+
+
+  <div class="flex-1 flex flex-col ml-64 max-md:ml-0">
+
+   
+    <header class="flex items-center justify-between bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 h-16 fixed top-0 left-64 right-0 z-40">
+      
+      <div class="flex-1 max-w-lg">
+        <input
+          type="search"
+          placeholder="Search tasks, docs, messages..."
+          class="w-full py-2 px-4 rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-gray-100"
+          aria-label="Search tasks, documents, messages"
+        />
+      </div>
+
+      
+      <div class="flex items-center space-x-4 mr-6">
+        <!-- <p class="text-gray-600 dark:text-gray-400 text-lg font-medium">Today: <span id="todayDate"></span></p> -->
+        <button id="openRequestModal" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition" aria-haspopup="dialog">Send Request</button>
+      </div>
+
+   
+      <div class="flex items-center space-x-4">
+        <button class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-label="Notifications">
+        
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+          </svg>
+        </button>
+
+        <button class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-label="Messages">
+         
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h8m-6 4h6" />
+          </svg>
+        </button>
+
+        <button id="dark-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-pressed="false" aria-label="Toggle dark mode">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M17.293 13.293a8 8 0 11-10.586-10.586 8 8 0 0010.586 10.586z" />
+          </svg>
+        </button>
+
+        
+        <div class="relative">
+          <button id="user-menu-button" class="flex items-center focus:outline-none rounded-full hover:ring-2 hover:ring-blue-500" aria-haspopup="true" aria-expanded="false" aria-label="User menu">
+            <img class="w-9 h-9 rounded-full" src="https://i.pravatar.cc/40" alt="User avatar" />
+          </button>
+        
+          <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50" role="menu" aria-label="User menu dropdown">
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem" tabindex="-1">View Profile</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem" tabindex="-1">Settings</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem" tabindex="-1">Help</a>
+            <hr class="border-gray-200 dark:border-gray-700" />
+            <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-100 dark:hover:bg-red-700 dark:hover:text-red-300" role="menuitem" tabindex="-1">Logout</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    
+<div class="min-h-screen flex flex-col lg:flex-row bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+
+
+ 
+
+  
+  <main class="flex-1 p-6 lg:p-8 overflow-y-auto">
+
+    
+    <header class="mb-6">
+      <h1 class="text-3xl font-extrabold mb-4">My Tasks</h1>
+
+      
+      <div class="flex flex-wrap gap-4 items-center mb-4">
+
+        <select id="statusFilter" class="rounded-md border border-gray-300 dark:border-gray-600 p-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
+          <option value="">Status: All</option>
+          <option value="To Do">To Do</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
+
+        
+        <select id="priorityFilter" class="rounded-md border border-gray-300 dark:border-gray-600 p-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
+          <option value="">Priority: All</option>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+
+        
+        <select id="projectFilter" class="rounded-md border border-gray-300 dark:border-gray-600 p-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
+          <option value="">Project: All</option>
+          <option value="Project Alpha">Project Alpha</option>
+          <option value="Project Beta">Project Beta</option>
+          <option value="Project Gamma">Project Gamma</option>
+        </select>
+
+        
+        <input type="date" id="dateFrom" class="rounded-md border border-gray-300 dark:border-gray-600 p-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100" placeholder="From" />
+        <input type="date" id="dateTo" class="rounded-md border border-gray-300 dark:border-gray-600 p-2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100" placeholder="To" />
+
+        <button id="clearFilters" class="ml-auto px-4 py-2 bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-400 dark:hover:bg-gray-600">Clear Filters</button>
+      </div>
+    </header>
+
+   
+    <section id="tasksList" class="grid gap-6 md:grid-cols-2">
+
+
+    </section>
+
+  </main>
+
+</div>
+
+
+<div id="taskDetailModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50">
+  <div class="bg-white dark:bg-gray-800 rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto p-6 relative">
+    <button id="closeModal" class="absolute top-4 right-4 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
+      &times;
+    </button>
+
+    <h2 id="modalTaskTitle" class="text-2xl font-bold mb-4"></h2>
+
+    <p id="modalTaskDescription" class="mb-4"></p>
+
+    <div class="mb-4">
+      <strong>Project:</strong> <span id="modalProject"></span><br/>
+      <strong>Due Date:</strong> <span id="modalDueDate"></span><br/>
+      <strong>Status:</strong> <span id="modalStatus" class="inline-block px-2 py-1 rounded-full font-semibold"></span><br/>
+      <strong>Priority:</strong> <span id="modalPriority" class="inline-block px-2 py-1 rounded-full font-semibold"></span><br/>
+      <strong>Assigned By:</strong> <span id="modalAssignedBy"></span>
+    </div>
+
+    <div class="mb-4">
+      <h3 class="font-semibold mb-2">Attached Files</h3>
+      <ul id="modalAttachedFiles" class="list-disc list-inside text-blue-600 dark:text-blue-400"></ul>
+    </div>
+
+  
+    <div class="mb-4">
+      <h3 class="font-semibold mb-2">Subtasks</h3>
+      <ul id="modalSubtasks" class="list-disc list-inside"></ul>
+    </div>
+
+   
+    <div class="mb-4">
+      <h3 class="font-semibold mb-2">Comments</h3>
+      <div id="modalComments" class="max-h-40 overflow-y-auto border border-gray-300 dark:border-gray-600 p-2 rounded-md space-y-2"></div>
+
+      <textarea id="commentInput" placeholder="Add a comment..." class="w-full mt-2 p-2 rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white resize-none"></textarea>
+      <button id="addCommentBtn" class="mt-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Add Comment</button>
+    </div>
+
+    <div class="mb-4">
+      <h3 class="font-semibold mb-2">Activity Log</h3>
+      <ul id="modalActivityLog" class="list-disc list-inside text-sm text-gray-600 dark:text-gray-400"></ul>
+    </div>
+
+ 
+    <div class="flex gap-3">
+      <button id="markCompleteBtn" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Mark as Complete</button>
+      <button id="requestReassignBtn" class="px-4 py-2 bg-yellow-600 text-white rounded-md hover:bg-yellow-700">Request Reassignment</button>
+      <button id="uploadFileBtn" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Upload File</button>
+      <button id="flagBlockerBtn" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">Flag Blocker</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCRIPTS -->
+<script>
+  // Sidebar mobile toggle from before
+  document.getElementById('mobileMenuToggle').addEventListener('click', () => {
+    document.getElementById('sidebarNav').classList.toggle('hidden');
+  });
+
+  // Sample tasks data
+  const tasks = [
+    {
+      id: 1,
+      title: 'Fix UI bug on profile page',
+      project: 'Project Alpha',
+      dueDate: '2025-06-05',
+      status: 'To Do',
+      priority: 'High',
+      assignedBy: 'Manager A',
+      description: 'Fix layout issues on the user profile page affecting mobile devices.',
+      attachedFiles: ['specs.pdf', 'screenshot1.png'],
+      subtasks: ['Identify bug', 'Fix CSS', 'Test on devices'],
+      comments: [
+        {author: 'Manager A', text: 'Please prioritize this.'},
+        {author: 'You', text: 'Working on it.'}
+      ],
+      activityLog: [
+        'Assigned on 2025-05-29',
+        'Status changed to To Do on 2025-05-29',
+      ],
+      progress: 10,
+    },
+    {
+      id: 2,
+      title: 'Develop login feature',
+      project: 'Project Beta',
+      dueDate: '2025-06-10',
+      status: 'In Progress',
+      priority: 'Medium',
+      assignedBy: 'Team Lead B',
+      description: 'Implement user login with email and password.',
+      attachedFiles: [],
+      subtasks: ['Design login form', 'Backend integration', 'Testing'],
+      comments: [],
+      activityLog: [
+        'Assigned on 2025-05-25',
+        'Status changed to In Progress on 2025-05-26',
+      ],
+      progress: 50,
+    },
+    {
+      id: 3,
+      title: 'Write documentation for API',
+      project: 'Project Gamma',
+      dueDate: '2025-06-01',
+      status: 'Completed',
+      priority: 'Low',
+      assignedBy: 'Manager A',
+      description: 'Complete API documentation and usage examples.',
+      attachedFiles: ['api-docs.pdf'],
+      subtasks: ['Write intro', 'Add examples', 'Review'],
+      comments: [{author: 'Manager A', text: 'Great work!'}],
+      activityLog: [
+        'Assigned on 2025-05-20',
+        'Marked completed on 2025-05-28',
+      ],
+      progress: 100,
+    }
+  ];
+
+  const tasksListEl = document.getElementById('tasksList');
+
+  // Render a single task card
+  function renderTaskCard(task) {
+    const statusColors = {
+      'To Do': 'bg-gray-300 text-gray-800',
+      'In Progress': 'bg-yellow-300 text-yellow-900',
+      'Completed': 'bg-green-300 text-green-900',
+      'Done': 'bg-green-300 text-green-900',
+    };
+
+    const priorityColors = {
+      High: 'bg-red-400 text-white',
+      Medium: 'bg-yellow-400 text-black',
+      Low: 'bg-green-400 text-white',
+    };
+
+    const timeLeft = (() => {
+      const due = new Date(task.dueDate);
+      const now = new Date();
+      const diff = (due - now) / (1000 * 60 * 60 * 24);
+      if(diff < 0) return 'Overdue';
+      if(diff < 1) return 'Due Today';
+      return Math.floor(diff) + 'd left';
+    })();
+
+    const card = document.createElement('div');
+    card.className = 'bg-white dark:bg-gray-800 rounded-lg shadow p-4 cursor-pointer hover:shadow-lg transition';
+    card.innerHTML = `
+      <h3 class="text-lg font-semibold mb-1">${task.title}</h3>
+      <p class="text-sm mb-1"><strong>Project:</strong> ${task.project}</p>
+      <p class="text-sm mb-1"><strong>Due:</strong> ${task.dueDate} (${timeLeft})</p>
+      <p>
+        <span class="inline-block px-2 py-1 rounded ${statusColors[task.status] || 'bg-gray-300'} font-semibold mr-2">${task.status}</span>
+        <span class="inline-block px-2 py-1 rounded ${priorityColors[task.priority] || 'bg-gray-300'} font-semibold">${task.priority}</span>
+      </p>
+      <p class="text-xs mt-2">Assigned By: <em>${task.assignedBy}</em></p>
+      <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mt-3 overflow-hidden">
+        <div class="bg-blue-600 h-2" style="width: ${task.progress}%;"></div>
+      </div>
+    `;
+    card.addEventListener('click', () => openTaskModal(task.id));
+    return card;
+  }
+
+  // Render all tasks with optional filters
+  function renderTasks(filters = {}) {
+    tasksListEl.innerHTML = '';
+    let filtered = tasks;
+
+    if(filters.status) {
+      filtered = filtered.filter(t => t.status === filters.status);
+    }
+    if(filters.priority) {
+      filtered = filtered.filter(t => t.priority === filters.priority);
+    }
+    if(filters.project) {
+      filtered = filtered.filter(t => t.project === filters.project);
+    }
+    if(filters.dateFrom) {
+      filtered = filtered.filter(t => new Date(t.dueDate) >= new Date(filters.dateFrom));
+    }
+    if(filters.dateTo) {
+      filtered = filtered.filter(t => new Date(t.dueDate) <= new Date(filters.dateTo));
+    }
+
+    if(filtered.length === 0){
+      tasksListEl.innerHTML = '<p class="text-center text-gray-500 dark:text-gray-400 col-span-2">No tasks match the filters.</p>';
+      return;
+    }
+
+    filtered.forEach(task => {
+      tasksListEl.appendChild(renderTaskCard(task));
+    });
+  }
+
+  // Modal elements
+  const modal = document.getElementById('taskDetailModal');
+  const modalTitle = document.getElementById('modalTaskTitle');
+  const modalDescription = document.getElementById('modalTaskDescription');
+  const modalProject = document.getElementById('modalProject');
+  const modalDueDate = document.getElementById('modalDueDate');
+  const modalStatus = document.getElementById('modalStatus');
+  const modalPriority = document.getElementById('modalPriority');
+  const modalAssignedBy = document.getElementById('modalAssignedBy');
+  const modalAttachedFiles = document.getElementById('modalAttachedFiles');
+  const modalSubtasks = document.getElementById('modalSubtasks');
+  const modalComments = document.getElementById('modalComments');
+  const modalActivityLog = document.getElementById('modalActivityLog');
+  const commentInput = document.getElementById('commentInput');
+
+  let currentTask = null;
+
+  function openTaskModal(taskId) {
+    currentTask = tasks.find(t => t.id === taskId);
+    if(!currentTask) return;
+
+    modalTitle.textContent = currentTask.title;
+    modalDescription.textContent = currentTask.description;
+    modalProject.textContent = currentTask.project;
+    modalDueDate.textContent = currentTask.dueDate;
+    modalStatus.textContent = currentTask.status;
+    modalPriority.textContent = currentTask.priority;
+    modalAssignedBy.textContent = currentTask.assignedBy;
+
+    // Status and Priority badges style
+    modalStatus.className = 'inline-block px-2 py-1 rounded font-semibold ' +
+      (currentTask.status === 'To Do' ? 'bg-gray-300 text-gray-800' :
+       currentTask.status === 'In Progress' ? 'bg-yellow-300 text-yellow-900' :
+       'bg-green-300 text-green-900');
+
+    modalPriority.className = 'inline-block px-2 py-1 rounded font-semibold ' +
+      (currentTask.priority === 'High' ? 'bg-red-400 text-white' :
+       currentTask.priority === 'Medium' ? 'bg-yellow-400 text-black' :
+       'bg-green-400 text-white');
+
+    // Attached Files
+    modalAttachedFiles.innerHTML = '';
+    if(currentTask.attachedFiles.length === 0) {
+      modalAttachedFiles.innerHTML = '<li>No attached files</li>';
+    } else {
+      currentTask.attachedFiles.forEach(f => {
+        const li = document.createElement('li');
+        li.textContent = f;
+        modalAttachedFiles.appendChild(li);
+      });
+    }
+
+    // Subtasks
+    modalSubtasks.innerHTML = '';
+    if(currentTask.subtasks.length === 0) {
+      modalSubtasks.innerHTML = '<li>No subtasks</li>';
+    } else {
+      currentTask.subtasks.forEach(st => {
+        const li = document.createElement('li');
+        li.textContent = st;
+        modalSubtasks.appendChild(li);
+      });
+    }
+
+    // Comments
+    renderComments();
+
+    // Activity Log
+    modalActivityLog.innerHTML = '';
+    currentTask.activityLog.forEach(a => {
+      const li = document.createElement('li');
+      li.textContent = a;
+      modalActivityLog.appendChild(li);
+    });
+
+    modal.classList.remove('hidden');
+  }
+
+  function renderComments() {
+    modalComments.innerHTML = '';
+    if(currentTask.comments.length === 0){
+      modalComments.innerHTML = '<p>No comments yet.</p>';
+      return;
+    }
+    currentTask.comments.forEach(c => {
+      const div = document.createElement('div');
+      div.className = 'p-2 bg-gray-100 dark:bg-gray-700 rounded-md';
+      div.innerHTML = `<strong>${c.author}:</strong> ${c.text}`;
+      modalComments.appendChild(div);
+    });
+  }
+
+  // Close modal
+  document.getElementById('closeModal').addEventListener('click', () => {
+    modal.classList.add('hidden');
+    commentInput.value = '';
+    currentTask = null;
+  });
+
+  // Add comment button
+  document.getElementById('addCommentBtn').addEventListener('click', () => {
+    if(!currentTask) return;
+    const text = commentInput.value.trim();
+    if(text === '') return alert('Please enter a comment.');
+
+    currentTask.comments.push({author: 'You', text});
+    currentTask.activityLog.push(`Comment added by You on ${new Date().toLocaleString()}`);
+    commentInput.value = '';
+    renderComments();
+    renderTasks(getFilters());
+  });
+
+  // Action buttons (for demo just alerts)
+  document.getElementById('markCompleteBtn').addEventListener('click', () => {
+    if(!currentTask) return;
+    currentTask.status = 'Completed';
+    currentTask.activityLog.push(`Marked complete on ${new Date().toLocaleString()}`);
+    alert('Task marked as complete!');
+    modal.classList.add('hidden');
+    renderTasks(getFilters());
+  });
+
+  document.getElementById('requestReassignBtn').addEventListener('click', () => {
+    if(!currentTask) return alert('Reassignment requested.');
+  });
+
+  document.getElementById('uploadFileBtn').addEventListener('click', () => {
+    if(!currentTask) return alert('Upload file dialog opened.');
+  });
+
+  document.getElementById('flagBlockerBtn').addEventListener('click', () => {
+    if(!currentTask) return alert('Blocker flagged for this task.');
+  });
+
+  // Filters functionality
+  function getFilters() {
+    return {
+      status: document.getElementById('statusFilter').value,
+      priority: document.getElementById('priorityFilter').value,
+      project: document.getElementById('projectFilter').value,
+      dateFrom: document.getElementById('dateFrom').value,
+      dateTo: document.getElementById('dateTo').value,
+    };
+  }
+
+  // Apply filters on change
+  document.getElementById('statusFilter').addEventListener('change', () => renderTasks(getFilters()));
+  document.getElementById('priorityFilter').addEventListener('change', () => renderTasks(getFilters()));
+  document.getElementById('projectFilter').addEventListener('change', () => renderTasks(getFilters()));
+  document.getElementById('dateFrom').addEventListener('change', () => renderTasks(getFilters()));
+  document.getElementById('dateTo').addEventListener('change', () => renderTasks(getFilters()));
+
+  document.getElementById('clearFilters').addEventListener('click', () => {
+    document.getElementById('statusFilter').value = '';
+    document.getElementById('priorityFilter').value = '';
+    document.getElementById('projectFilter').value = '';
+    document.getElementById('dateFrom').value = '';
+    document.getElementById('dateTo').value = '';
+    renderTasks({});
+  });
+
+  // Initial render
+  renderTasks();
+
+</script>

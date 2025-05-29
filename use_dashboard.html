@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dev360</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+
+    tailwind.config = {
+      darkMode: 'class'
+    };
+  </script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen flex">
+
+  
+<button id="toggleSidebar" class="md:hidden fixed top-4 left-4 z-50 p-2 rounded bg-[#031A4C] text-white">
+  ☰
+</button>
+
+
+<aside id="sidebar" class="w-64 bg-[#031A4C] text-white dark:bg-gray-800 dark:text-gray-200 border-r border-white dark:border-gray-700 flex flex-col fixed top-0 left-0 bottom-0 z-40 transform -translate-x-full transition-transform duration-300 md:translate-x-0">
+  <div class="p-6 text-2xl font-bold border-b border-white dark:border-gray-700">
+    Dev360
+  </div>
+  <nav class="flex-grow overflow-y-auto" aria-label="Sidebar Navigation">
+    <ul class="mt-4 space-y-1">
+      <li><a href="#" class="flex items-center px-6 py-3 hover:bg-blue-700 dark:hover:bg-gray-700 rounded-md font-semibold">Dashboard</a></li>
+      <li><a href="#" class="flex items-center px-6 py-3 hover:bg-blue-700 dark:hover:bg-gray-700 rounded-md">My Tasks</a></li>
+      <li><a href="#" class="flex items-center px-6 py-3 hover:bg-blue-700 dark:hover:bg-gray-700 rounded-md">Submit Updates</a></li>
+      <li><a href="#" class="flex items-center px-6 py-3 hover:bg-blue-700 dark:hover:bg-gray-700 rounded-md">Project Tracker</a></li>
+      <li><a href="#" class="flex items-center px-6 py-3 hover:bg-blue-700 dark:hover:bg-gray-700 rounded-md">Knowledge Base</a></li>
+      <li><a href="#" class="flex items-center px-6 py-3 hover:bg-blue-700 dark:hover:bg-gray-700 rounded-md">Messages / Chat</a></li>
+      <li><a href="#" class="flex items-center px-6 py-3 hover:bg-blue-700 dark:hover:bg-gray-700 rounded-md">Reports</a></li>
+      <li><a href="#" class="flex items-center px-6 py-3 hover:bg-blue-700 dark:hover:bg-gray-700 rounded-md">Profile / Settings</a></li>
+    </ul>
+  </nav>
+</aside>    
+
+
+  <div class="flex-1 flex flex-col ml-64 max-md:ml-0">
+
+    <header class="flex items-center justify-between bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 h-16 fixed top-0 left-64 right-0 z-40">
+    
+      <div class="flex-1 max-w-lg">
+        <input
+          type="search"
+          placeholder="Search tasks, docs, messages..."
+          class="w-full py-2 px-4 rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-gray-100"
+          aria-label="Search tasks, documents, messages"
+        />
+      </div>
+
+     
+      <div class="flex items-center space-x-4 mr-6">
+        
+        <button id="openRequestModal" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition" aria-haspopup="dialog">Send Request</button>
+      </div>
+
+  
+      <div class="flex items-center space-x-4">
+        <button class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-label="Notifications">
+         
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+          </svg>
+        </button>
+
+        <button class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-label="Messages">
+       
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h8m-6 4h6" />
+          </svg>
+        </button>
+
+    
+        <button id="dark-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-pressed="false" aria-label="Toggle dark mode">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M17.293 13.293a8 8 0 11-10.586-10.586 8 8 0 0010.586 10.586z" />
+          </svg>
+        </button>
+
+        <div class="relative">
+          <button id="user-menu-button" class="flex items-center focus:outline-none rounded-full hover:ring-2 hover:ring-blue-500" aria-haspopup="true" aria-expanded="false" aria-label="User menu">
+            <img class="w-9 h-9 rounded-full" src="https://i.pravatar.cc/40" alt="User avatar" />
+          </button>
+      
+          <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50" role="menu" aria-label="User menu dropdown">
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem" tabindex="-1">View Profile</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem" tabindex="-1">Settings</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem" tabindex="-1">Help</a>
+            <hr class="border-gray-200 dark:border-gray-700" />
+            <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-100 dark:hover:bg-red-700 dark:hover:text-red-300" role="menuitem" tabindex="-1">Logout</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+
+    <main class="flex-1 p-8 pt-24 overflow-y-auto space-y-8 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+
+
+      <div class="flex justify-between items-center">
+        <h1 class="text-4xl font-extrabold tracking-tight">Welcome back, Amit 👋</h1>
+        <p class="text-gray-600 dark:text-gray-400 text-lg font-medium">Today: <span id="todayDate"></span></p>
+        
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
+          <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Today's Logged Hours</p>
+          <p class="mt-2 text-3xl font-extrabold text-blue-600">5h 20m</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
+          <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Tasks Completed</p>
+          <p class="mt-2 text-3xl font-extrabold text-green-500">3</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
+          <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Current Task</p>
+          <p class="mt-2 text-lg font-semibold truncate">UI Bug Fixing - Profile Page</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
+          <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Focus Score</p>
+          <p class="mt-2 text-3xl font-extrabold text-yellow-500">78%</p>
+        </div>
+      </div>
+
+      
+      <section class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
+        <h2 class="text-xl font-semibold mb-4">Current Month Reward - <span id="currentMonthName"></span></h2>
+        <div class="flex items-center space-x-6">
+        
+          <div class="flex flex-col items-center text-yellow-500">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-16 h-16 text-yellow-500" fill="none" viewBox="0 0 64 64" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="32" cy="32" r="30" stroke="gold" stroke-width="3" fill="none"/>
+              <path d="M32 12 L38 28 L56 28 L41 38 L47 54 L32 44 L17 54 L23 38 L8 28 L26 28 Z" fill="gold"/>
+            </svg>
+            <span class="mt-2 font-medium text-gray-900 dark:text-gray-100">Top Performer</span>
+          </div>
+          
+        </div>
+      </section>
+
+      <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+   
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
+          <h3 class="text-lg font-semibold mb-2">Morning Report</h3>
+          <textarea
+            id="morningReport"
+            rows="6"
+            placeholder="Enter your morning report here..."
+            class="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 p-3 text-gray-900 dark:text-gray-100 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+            aria-label="Morning report"
+          ></textarea>
+          <button id="saveMorningReport" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Save</button>
+        </div>
+
+   
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
+          <h3 class="text-lg font-semibold mb-2">Evening Report</h3>
+          <textarea
+            id="eveningReport"
+            rows="6"
+            placeholder="Enter your evening report here..."
+            class="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 p-3 text-gray-900 dark:text-gray-100 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+            aria-label="Evening report"
+          ></textarea>
+          <button id="saveEveningReport" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Save</button>
+        </div>
+      </section>
+
+
+
+
+<section class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
+  <h2 class="text-xl font-semibold mb-4">Weekly Progress</h2>
+  <canvas id="progressChart" class="w-full h-64"></canvas>
+</section>
+
+
+
+    </main>
+  </div>
+
+
+  <div
+    id="requestModal"
+    class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 hidden"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modalTitle"
+  >
+    <div class="bg-white dark:bg-gray-800 rounded-xl max-w-xl w-full p-6 relative">
+      <h2 id="modalTitle" class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Send New Request</h2>
+      <form id="requestForm" class="space-y-4">
+        <div>
+          <label for="requestTitle" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Request Title</label>
+          <input
+            id="requestTitle"
+            name="requestTitle"
+            type="text"
+            required
+            class="mt-1 w-full rounded-md border border-gray-300 dark:border-gray-600 p-2 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div>
+          <label for="requestDescription" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
+          <textarea
+            id="requestDescription"
+            name="requestDescription"
+            rows="4"
+            required
+            class="mt-1 w-full rounded-md border border-gray-300 dark:border-gray-600 p-2 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+          ></textarea>
+        </div>
+        <div class="flex justify-end space-x-4">
+          <button
+            type="button"
+            id="closeRequestModal"
+            class="px-4 py-2 bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-600 transition"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<script>
+  const sidebar = document.getElementById('sidebar');
+  const toggleBtn = document.getElementById('toggleSidebar');
+  const overlay = document.getElementById('overlay');
+
+  toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('-translate-x-full');
+    overlay.classList.toggle('hidden');
+  });
+
+  overlay.addEventListener('click', () => {
+    sidebar.classList.add('-translate-x-full');
+    overlay.classList.add('hidden');
+  });
+</script>
+  <script>
+    // Display today's date in two places
+    const today = new Date();
+    const options = { month: "long", day: "numeric", year: "numeric" };
+    const todayFormatted = today.toLocaleDateString(undefined, options);
+    document.getElementById("todayDate").textContent = todayFormatted;
+    document.getElementById("todayDate2").textContent = todayFormatted;
+    document.getElementById("currentMonthName").textContent = today.toLocaleDateString(undefined, { month: "long" });
+
+    // Dark mode toggle
+    const darkToggle = document.getElementById("dark-toggle");
+    const htmlElement = document.documentElement;
+
+    // Initialize dark mode based on system preference or saved setting
+    if (localStorage.getItem("theme") === "dark" || (!localStorage.getItem("theme") && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+      htmlElement.classList.add("dark");
+      darkToggle.setAttribute("aria-pressed", "true");
+    }
+
+    darkToggle.addEventListener("click", () => {
+      if (htmlElement.classList.contains("dark")) {
+        htmlElement.classList.remove("dark");
+        localStorage.setItem("theme", "light");
+        darkToggle.setAttribute("aria-pressed", "false");
+      } else {
+        htmlElement.classList.add("dark");
+        localStorage.setItem("theme", "dark");
+        darkToggle.setAttribute("aria-pressed", "true");
+      }
+    });
+
+    // User menu toggle
+    const userMenuBtn = document.getElementById("user-menu-button");
+    const userDropdown = document.getElementById("user-dropdown");
+
+    userMenuBtn.addEventListener("click", () => {
+      const expanded = userMenuBtn.getAttribute("aria-expanded") === "true";
+      userMenuBtn.setAttribute("aria-expanded", !expanded);
+      userDropdown.classList.toggle("hidden");
+    });
+
+    // Close user menu if clicked outside
+    document.addEventListener("click", (e) => {
+      if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
+        userDropdown.classList.add("hidden");
+        userMenuBtn.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    // Modal open/close
+    const openModalBtn = document.getElementById("openRequestModal");
+    const closeModalBtn = document.getElementById("closeRequestModal");
+    const modal = document.getElementById("requestModal");
+
+    openModalBtn.addEventListener("click", () => {
+      modal.classList.remove("hidden");
+      document.getElementById("requestTitle").focus();
+    });
+
+    closeModalBtn.addEventListener("click", () => {
+      modal.classList.add("hidden");
+    });
+
+    // Close modal on outside click
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.classList.add("hidden");
+      }
+    });
+
+    // Form submission (you can connect this to backend or API)
+    document.getElementById("requestForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const title = e.target.requestTitle.value.trim();
+      const description = e.target.requestDescription.value.trim();
+
+      if (title && description) {
+        alert(`Request submitted:\nTitle: ${title}\nDescription: ${description}`);
+        e.target.reset();
+        modal.classList.add("hidden");
+      } else {
+        alert("Please fill out all fields.");
+      }
+    });
+
+    // Save Morning Report (example: save to localStorage)
+    document.getElementById("saveMorningReport").addEventListener("click", () => {
+      const report = document.getElementById("morningReport").value.trim();
+      if (report) {
+        localStorage.setItem("morningReport", report);
+        alert("Morning report saved.");
+      } else {
+        alert("Please enter your morning report.");
+      }
+    });
+
+    // Save Evening Report
+    document.getElementById("saveEveningReport").addEventListener("click", () => {
+      const report = document.getElementById("eveningReport").value.trim();
+      if (report) {
+        localStorage.setItem("eveningReport", report);
+        alert("Evening report saved.");
+      } else {
+        alert("Please enter your evening report.");
+      }
+    });
+
+    // Load saved reports on page load
+    window.addEventListener("load", () => {
+      const morning = localStorage.getItem("morningReport");
+      if (morning) document.getElementById("morningReport").value = morning;
+      const evening = localStorage.getItem("eveningReport");
+      if (evening) document.getElementById("eveningReport").value = evening;
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    const ctx = document.getElementById('progressChart').getContext('2d');
+const progressChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    datasets: [{
+      label: "Hours Worked",
+      data: [5, 6, 4.5, 7, 5.5, 3, 0],
+      backgroundColor: 'rgba(37, 99, 235, 0.7)', // Tailwind blue-600 transparent
+      borderRadius: 5,
+    }]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      y: { beginAtZero: true, max: 8, title: { display: true, text: 'Hours' } },
+      x: { title: { display: true, text: 'Day' } }
+    }
+  }
+});
+
+  </script>
+</body>
+</html>
