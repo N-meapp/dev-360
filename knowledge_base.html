@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dev360</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./static/css/style.css">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    };
+  </script>
+</head>
+<body class=" dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen flex">
+
+<button id="toggleSidebar" class="md:hidden fixed top-4 left-4 z-50 p-2 rounded bg-[#031A4C] text-white">
+  ☰
+</button>
+
+<aside id="sidebar" class="w-64 bg-[#031A4C] text-white dark:bg-gray-800 dark:text-gray-200 border-r border-white dark:border-gray-700 flex flex-col fixed top-0 left-0 bottom-0 z-40 transform -translate-x-full transition-transform duration-300 md:translate-x-0">
+  <div class="p-6 text-2xl font-bold border-b border-white dark:border-gray-700">
+    Dev360
+  </div>
+  <nav class="flex-grow overflow-y-auto" aria-label="Sidebar Navigation">
+    <ul class="mt-4 space-y-1">
+      <li><a href="user_dashboard.html" class="flex items-center px-6 py-3 hover:bg-blue-700 dark:hover:bg-gray-700 rounded-md font-semibold">Dashboard</a></li>
+      <li><a href="mytask.html" class="flex items-center px-6 py-3 hover:bg-blue-700 dark:hover:bg-gray-700 rounded-md">My Tasks</a></li>
+      <li><a href="updates.html" class="flex items-center px-6 py-3 hover:bg-blue-700 dark:hover:bg-gray-700 rounded-md">Submit Updates</a></li>
+      <li><a href="project_tracker.html" class="flex items-center px-6 py-3 hover:bg-blue-700 dark:hover:bg-gray-700 rounded-md">Project Tracker</a></li>
+      <li><a href="knowledge_base.html" class="flex items-center px-6 py-3 hover:bg-blue-700 dark:hover:bg-gray-700 rounded-md">Knowledge Base</a></li>
+      <li><a href="messages.html" class="flex items-center px-6 py-3 hover:bg-blue-700 dark:hover:bg-gray-700 rounded-md">Messages / Chat</a></li>
+      <li><a href="reports.html" class="flex items-center px-6 py-3 hover:bg-blue-700 dark:hover:bg-gray-700 rounded-md">Reports</a></li>
+      <li><a href="profile.html" class="flex items-center px-6 py-3 hover:bg-blue-700 dark:hover:bg-gray-700 rounded-md">Profile / Settings</a></li>
+    </ul>
+  </nav>
+</aside>    
+
+<div class="flex-1 flex flex-col ml-64 max-md:ml-0">
+
+  <header class="flex items-center justify-between bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 h-16 fixed top-0 left-64 right-0 z-40">
+    <div class="flex-1 max-w-lg">
+      <input
+        type="search"
+        placeholder="Search tasks, docs, messages..."
+        class="w-full py-2 px-4 rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-gray-100"
+        aria-label="Search tasks, documents, messages"
+      />
+    </div>
+    <div class="flex items-center space-x-4 mr-6">
+      <button id="openRequestModal" class="px-4 py-2 bg-[#031A4C] text-white rounded-lg hover:bg-blue-700 transition" aria-haspopup="dialog">Send Request</button>
+    </div>
+    <div class="flex items-center space-x-4">
+      <button class="p-2 rounded-full" aria-label="Notifications">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+        </svg>
+      </button>
+      <button class="p-2 rounded-full" aria-label="Messages">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h8m-6 4h6" />
+        </svg>
+      </button>
+      <button id="dark-toggle" class="p-2 rounded-full" aria-pressed="false" aria-label="Toggle dark mode">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M17.293 13.293a8 8 0 11-10.586-10.586 8 8 0 0010.586 10.586z" />
+        </svg>
+      </button>
+      <div class="relative">
+        <button id="user-menu-button" class="flex items-center focus:outline-none rounded-full hover:ring-2 hover:ring-blue-500" aria-haspopup="true" aria-expanded="false" aria-label="User menu">
+          <img class="w-9 h-9 rounded-full" src="https://i.pravatar.cc/40" alt="User avatar" />
+        </button>
+        <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50" role="menu" aria-label="User menu dropdown">
+          <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem">View Profile</a>
+          <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem">Settings</a>
+          <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem">Help</a>
+          <hr class="border-gray-200 dark:border-gray-700" />
+          <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-100 dark:hover:bg-red-700 dark:hover:text-red-300" role="menuitem">Logout</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="w-full p-8 mt-10">
+    <h2 class="text-3xl font-bold mb-6">Knowledge Base</h2>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="border border-white rounded-lg p-4 shadow hover:shadow-lg transition">
+        <div class="flex justify-between items-start">
+          <h3 class="text-lg font-semibold text-blue-600 hover:underline cursor-pointer">API Integration Guide</h3>
+          <span class="text-xs text-gray-600">PDF</span>
+        </div>
+        <p class="text-sm text-gray-500 mt-1">Tags: #API, #Backend</p>
+        <p class="text-sm text-gray-500">Project: Project Alpha</p>
+        <p class="text-xs text-gray-400 mt-1">By Jane Doe • 2025-05-20</p>
+        <div class="flex gap-2 mt-2">
+          <button onclick="openModal('view')" class="text-blue-500 text-sm hover:underline">View</button>
+          <button onclick="openModal('edit')" class="text-green-500 text-sm hover:underline">Edit</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-12 border-t pt-8">
+      <h3 class="text-2xl font-bold mb-4">Create or Upload Document</h3>
+      <form class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block font-semibold mb-1">Document Title</label>
+          <input type="text" class="w-full border border-gray-400 px-3 py-2 rounded bg-transparent" />
+        </div>
+        <div class="col-span-2">
+          <label class="block font-semibold mb-1">Tags</label>
+          <input type="text" class="w-full border border-gray-400 px-3 py-2 rounded bg-transparent" placeholder="#API, #Frontend" />
+        </div>
+        <div class="col-span-2">
+          <label class="block font-semibold mb-1">Linked Project</label>
+          <input type="text" class="w-full border border-gray-400 px-3 py-2 rounded bg-transparent" />
+        </div>
+        <div class="col-span-2">
+          <label class="block font-semibold mb-1">Upload File / Content</label>
+          <input type="file" class="w-full text-sm text-gray-600" />
+          <textarea class="w-full border border-gray-400 mt-2 px-3 py-2 rounded bg-transparent" rows="6" placeholder="Write markdown or notes here..."></textarea>
+        </div>
+        <div class="col-span-2">
+          <label class="block font-semibold mb-1">Change Notes</label>
+          <input type="text" class="w-full border border-gray-400 px-3 py-2 rounded bg-transparent" placeholder="What changed in this version?" />
+        </div>
+        <div class="col-span-2 text-right">
+          <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Upload Document</button>
+        </div>
+      </form>
+    </div>
+
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-100 hidden items-center justify-center z-50">
+      <div class="rounded-lg p-6 w-full max-w-3xl relative">
+        <button onclick="closeModal()" class="absolute top-2 right-2 text-white">✕</button>
+        <h3 class="text-xl font-bold mb-4" id="modalTitle">View/Edit Document</h3>
+        <form class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block font-semibold mb-1">Document Title</label>
+            <input type="text" class="w-full border border-gray-300 px-3 py-2 rounded bg-transparent" value="API Integration Guide" />
+          </div>
+          <div class="col-span-2">
+            <label class="block font-semibold mb-1">Tags</label>
+            <input type="text" class="w-full border border-gray-300 px-3 py-2 rounded bg-transparent" value="#API, #Backend" />
+          </div>
+          <div class="col-span-2">
+            <label class="block font-semibold mb-1">Linked Project</label>
+            <input type="text" class="w-full border border-gray-300 px-3 py-2 rounded bg-transparent" value="Project Alpha" />
+          </div>
+          <div class="col-span-2">
+            <label class="block font-semibold mb-1">Content</label>
+            <textarea class="w-full border border-gray-300 px-3 py-2 rounded bg-transparent" rows="6">This document explains how to integrate REST APIs...</textarea>
+          </div>
+          <div class="col-span-2">
+            <label class="block font-semibold mb-1">Change Notes</label>
+            <input type="text" class="w-full border border-gray-300 px-3 py-2 rounded bg-transparent" placeholder="What changed in this version?" />
+          </div>
+          <div class="col-span-2 text-right">
+            <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openModal(mode) {
+    const modal = document.getElementById('modal');
+    document.getElementById('modalTitle').textContent = mode === 'edit' ? 'Edit Document' : 'View Document';
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+
+  function closeModal() {
+    const modal = document.getElementById('modal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+</script>
+
+<script src="./static/js/script.js"></script>
+</body>
+</html>

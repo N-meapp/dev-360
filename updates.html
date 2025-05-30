@@ -18,7 +18,7 @@
     };
   </script>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen flex">
+<body class=" dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen flex">
 
 
 <button id="toggleSidebar" class="md:hidden fixed top-4 left-4 z-50 p-2 rounded bg-[#031A4C] text-white">
@@ -67,21 +67,21 @@
 
    
       <div class="flex items-center space-x-4">
-        <button class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-label="Notifications">
+        <button class="p-2 rounded-full hover: dark:hover:bg-gray-700" aria-label="Notifications">
         
           <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
           </svg>
         </button>
 
-        <button class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-label="Messages">
+        <button class="p-2 rounded-full hover: dark:hover:bg-gray-700" aria-label="Messages">
          
           <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h8m-6 4h6" />
           </svg>
         </button>
 
-        <button id="dark-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-pressed="false" aria-label="Toggle dark mode">
+        <button id="dark-toggle" class="p-2 rounded-full hover: dark:hover:bg-gray-700" aria-pressed="false" aria-label="Toggle dark mode">
           <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
             <path d="M17.293 13.293a8 8 0 11-10.586-10.586 8 8 0 0010.586 10.586z" />
           </svg>
@@ -104,124 +104,111 @@
       </div>
     </header>
 
-    
-
-<div class="p-4 mt-20">
- 
-  <div class="bg-white dark:bg-gray-800 shadow rounded p-4 mb-6">
-    <h2 class="text-xl font-semibold mb-2">Assigned Work Details</h2>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
-      <div><strong>Project:</strong> Dashboard Revamp</div>
-      <div><strong>Assigned By:</strong> Sarah K.</div>
-      <div><strong>Due Date:</strong> 2025-06-05</div>
-      <div><strong>Priority:</strong> High</div>
-      <div><strong>Category:</strong> Client Work</div>
-      <div><strong>Time Left:</strong> 7 days</div>
-    </div>
+<div class="w-full mx-auto p-6 mt-20 px-20">
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold">Submit Work Update</h2>
+    <input type="date" class="border border-gray-300 bg-transparent rounded px-3 py-2" value="2025-05-29">
   </div>
 
- 
-<div class="p-4 bg-white dark:bg-gray-800 shadow mb-4 rounded">
-  <h2 class="text-xl font-bold mb-4"><span class="text-2xl">+</span> Add New Task</h2>
-  <div class="flex flex-col md:flex-row gap-4">
-    <input type="text" id="newTaskText" placeholder="Enter task title..." class="flex-1 px-3 py-2 border rounded dark:bg-gray-700 dark:text-white" />
-    <select id="columnSelector" class="px-3 py-2 border rounded dark:bg-gray-700 dark:text-white">
-      <option value="todoColumn">To Do</option>
-      <option value="inProgressColumn">In Progress</option>
-      <option value="doneColumn">Done</option>
-    </select>
-    <button onclick="addTask()" class="px-4 py-2 bg-[#031A4C] text-white rounded hover:bg-blue-700">Add Task</button>
+  <!-- Form -->
+  <form class="grid grid-cols-2 gap-6 border border-white p-6 rounded-lg">
+    <!-- Row 1 -->
+    <div>
+      <label class="block font-semibold mb-1">Task / Project</label>
+      <select class="w-full border border-gray-300 bg-transparent px-3 py-2 rounded">
+        <option>Select Task or Project</option>
+        <option>Project Alpha</option>
+        <option>UI Redesign</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="block font-semibold mb-1">Time Spent (HH:MM)</label>
+      <input type="text" class="w-full border border-gray-300 bg-transparent px-3 py-2 rounded" placeholder="e.g. 04:30">
+    </div>
+
+    <!-- Row 2 -->
+    <div>
+      <label class="block font-semibold mb-1">Work Done Summary</label>
+      <textarea rows="4" class="w-full border border-gray-300 bg-transparent px-3 py-2 rounded" placeholder="What did you complete today?"></textarea>
+    </div>
+
+    <div>
+      <label class="block font-semibold mb-1">Blockers / Issues (Optional)</label>
+      <textarea rows="4" class="w-full border border-gray-300 bg-transparent px-3 py-2 rounded"></textarea>
+    </div>
+
+    <!-- Row 3 -->
+    <div>
+      <label class="block font-semibold mb-1">Next Plan / Tomorrow's Work</label>
+      <textarea rows="3" class="w-full border border-gray-300 bg-transparent px-3 py-2 rounded"></textarea>
+    </div>
+
+    <div class="space-y-4">
+      <div>
+        <label class="block font-semibold mb-1">Attachments</label>
+        <input type="file" class="block w-full text-sm text-gray-600">
+      </div>
+      <div>
+        <label class="block font-semibold mb-1">Git Repository Link</label>
+        <input type="url" class="w-full border border-gray-300 bg-transparent px-3 py-2 rounded" placeholder="https://github.com/your-repo">
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="col-span-2 text-center mt-4">
+      <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded font-semibold hover:bg-blue-700">
+        Submit Update
+      </button>
+    </div>
+  </form>
+
+  <!-- View Previous Updates -->
+  <div class="mt-12">
+    <h3 class="text-xl font-semibold mb-4">Previous Updates</h3>
+    <div class="overflow-x-auto border rounded-lg">
+      <table class="min-w-full text-left text-sm">
+        <thead class="bg-gray-100 text-gray-700">
+          <tr>
+            <th class="px-4 py-2">Date</th>
+            <th class="px-4 py-2">Task/Project</th>
+            <th class="px-4 py-2">Time Spent</th>
+            <th class="px-4 py-2">Summary</th>
+            <th class="px-4 py-2">Blockers</th>
+            <th class="px-4 py-2">Next Plan</th>
+            <th class="px-4 py-2">Git Link</th>
+            <th class="px-4 py-2">Attachment</th>
+            <th class="px-4 py-2 text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <!-- Example row -->
+          <tr>
+            <td class="px-4 py-2">2025-05-28</td>
+            <td class="px-4 py-2">Project Alpha</td>
+            <td class="px-4 py-2">04:30</td>
+            <td class="px-4 py-2">Completed login page and integrated API</td>
+            <td class="px-4 py-2">None</td>
+            <td class="px-4 py-2">Work on dashboard module</td>
+            <td class="px-4 py-2">
+              <a href="https://github.com/example/project" class="text-blue-600 hover:underline" target="_blank">
+                GitHub
+              </a>
+            </td>
+            <td class="px-4 py-2">login-page.png</td>
+            <td class="px-4 py-2 text-center space-x-2">
+              <button class="text-blue-600 hover:underline">Edit</button>
+              <button class="text-red-600 hover:underline">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
- 
-  <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded shadow min-h-[400px]">
-    <h3 class="font-bold text-lg mb-3">To Do</h3>
-    <div id="todoColumn" class="space-y-3 min-h-[200px]">
-      <div draggable="true" class="task-card">Set Up Project Structure</div>
-      <div draggable="true" class="task-card">Design Wireframes</div>
-    </div>
-  </div>
 
-
-  <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded shadow min-h-[400px]">
-    <h3 class="font-bold text-lg mb-3">In Progress</h3>
-    <div id="inProgressColumn" class="space-y-3 min-h-[200px]">
-      <div draggable="true" class="task-card">Build Auth Module</div>
-    </div>
-  </div>
-
-  
-  <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded shadow min-h-[400px]">
-    <h3 class="font-bold text-lg mb-3">Done</h3>
-    <div id="doneColumn" class="space-y-3 min-h-[200px]">
-      <div draggable="true" class="task-card">Project Setup</div>
-    </div>
-  </div>
-</div>
-
-
-
-<script>
-  const columns = document.querySelectorAll('[id$="Column"]');
-  let draggedCard = null;
-
-  document.querySelectorAll('.task-card').forEach(makeDraggable);
-
-  columns.forEach(col => {
-    col.addEventListener('dragover', e => e.preventDefault());
-    col.addEventListener('drop', () => {
-      if (draggedCard) col.appendChild(draggedCard);
-    });
-  });
-
-  function makeDraggable(card) {
-    card.addEventListener('dragstart', () => {
-      draggedCard = card;
-      setTimeout(() => card.style.display = 'none', 0);
-    });
-    card.addEventListener('dragend', () => {
-      setTimeout(() => {
-        draggedCard.style.display = 'block';
-        draggedCard = null;
-      }, 0);
-    });
-  }
-
-  function addTask() {
-    const text = document.getElementById('newTaskText').value.trim();
-    const columnId = document.getElementById('columnSelector').value;
-
-    if (!text) {
-      alert('Please enter a task title.');
-      return;
-    }
-
-    const newCard = document.createElement('div');
-    newCard.className = 'task-card';
-    newCard.textContent = text;
-    newCard.setAttribute('draggable', 'true');
-
-    makeDraggable(newCard);
-
-    document.getElementById(columnId).appendChild(newCard);
-    document.getElementById('newTaskText').value = '';
-  }
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
 
 <script src="./static/js/script.js"></script>
 </body>

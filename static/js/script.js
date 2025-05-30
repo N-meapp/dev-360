@@ -52,4 +52,21 @@
 
 
 
-  
+  document.querySelectorAll('.text-blue-600.cursor-pointer').forEach(el => {
+  el.addEventListener('click', () => {
+    document.getElementById('taskDetailModal').classList.remove('hidden');
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+// MYtask page
+
