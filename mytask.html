@@ -74,12 +74,12 @@
           </svg>
         </button>
 
-        <button class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-label="Messages">
+        <!-- <button class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-label="Messages">
          
           <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h8m-6 4h6" />
           </svg>
-        </button>
+        </button> -->
 
         <button id="dark-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-pressed="false" aria-label="Toggle dark mode">
           <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
@@ -130,7 +130,8 @@
       <option value="inProgressColumn">In Progress</option>
       <option value="doneColumn">Done</option>
     </select>
-    <button onclick="addTask()" class="px-4 py-2 bg-[#031A4C] text-white rounded hover:bg-blue-700">Add Task</button>
+    <button id="addTaskButton" class="px-4 py-2 bg-[#031A4C] text-white rounded hover:bg-blue-700">Add Task</button>
+
   </div>
 </div>
 
@@ -163,66 +164,9 @@
 
 
 
-<script>
-  const columns = document.querySelectorAll('[id$="Column"]');
-  let draggedCard = null;
-
-  document.querySelectorAll('.task-card').forEach(makeDraggable);
-
-  columns.forEach(col => {
-    col.addEventListener('dragover', e => e.preventDefault());
-    col.addEventListener('drop', () => {
-      if (draggedCard) col.appendChild(draggedCard);
-    });
-  });
-
-  function makeDraggable(card) {
-    card.addEventListener('dragstart', () => {
-      draggedCard = card;
-      setTimeout(() => card.style.display = 'none', 0);
-    });
-    card.addEventListener('dragend', () => {
-      setTimeout(() => {
-        draggedCard.style.display = 'block';
-        draggedCard = null;
-      }, 0);
-    });
-  }
-
-  function addTask() {
-    const text = document.getElementById('newTaskText').value.trim();
-    const columnId = document.getElementById('columnSelector').value;
-
-    if (!text) {
-      alert('Please enter a task title.');
-      return;
-    }
-
-    const newCard = document.createElement('div');
-    newCard.className = 'task-card';
-    newCard.textContent = text;
-    newCard.setAttribute('draggable', 'true');
-
-    makeDraggable(newCard);
-
-    document.getElementById(columnId).appendChild(newCard);
-    document.getElementById('newTaskText').value = '';
-  }
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
 </div>
 
-<script src="./static/js/script.js"></script>
+<script src="/static/js/script.js" defer></script>
+
 </body>
 </html>

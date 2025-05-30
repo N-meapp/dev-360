@@ -46,9 +46,7 @@
 
 
 
-  document.getElementById('todayDate').textContent = new Date().toLocaleDateString(undefined, {
-    weekday: 'long', year: 'numeric', month: 'short', day: 'numeric'
-  });
+
 
 
 
@@ -64,9 +62,132 @@
 
 
 
+// knowledge base
+
+ function openModal(mode) {
+    const modal = document.getElementById('modal');
+    document.getElementById('modalTitle').textContent = mode === 'edit' ? 'Edit Document' : 'View Document';
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+
+  function closeModal() {
+    const modal = document.getElementById('modal');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
 
 
 
 
-// MYtask page
+// mytask
+console.log("✅ script.js loaded");
 
+document.addEventListener('DOMContentLoaded', () => {
+  const addTaskButton = document.getElementById('addTaskButton');
+  const newTaskText = document.getElementById('newTaskText');
+  const columnSelector = document.getElementById('columnSelector');
+
+  let draggedCard = null;
+  const columns = document.querySelectorAll('[id$="Column"]');
+
+  // Make existing tasks draggable
+  document.querySelectorAll('.task-card').forEach(makeDraggable);
+
+  columns.forEach(col => {
+    col.addEventListener('dragover', e => e.preventDefault());
+    col.addEventListener('drop', () => {
+      if (draggedCard) col.appendChild(draggedCard);
+    });
+  });
+
+  function makeDraggable(card) {
+    card.addEventListener('dragstart', () => {
+      draggedCard = card;
+      setTimeout(() => card.style.display = 'none', 0);
+    });
+    card.addEventListener('dragend', () => {
+      setTimeout(() => {
+        draggedCard.style.display = 'block';
+        draggedCard = null;
+      }, 0);
+    });
+  }
+
+  function addTask() {
+    const text = newTaskText.value.trim();
+    const columnId = columnSelector.value;
+
+    if (!text) {
+      alert('Please enter a task title.');
+      return;
+    }
+
+    const newCard = document.createElement('div');
+    newCard.className = 'task-card';
+    newCard.textContent = text;
+    newCard.setAttribute('draggable', 'true');
+
+    makeDraggable(newCard);
+
+    document.getElementById(columnId).appendChild(newCard);
+    newTaskText.value = '';
+  }
+
+  // Attach event listener to the button
+  addTaskButton.addEventListener('click', addTask);
+});
+
+
+// profile page
+
+document.addEventListener("DOMContentLoaded", function () {
+  function previewProfile(event) {
+    const output = document.getElementById('profilePreview');
+    output.src = URL.createObjectURL(event.target.files[0]);
+  }
+
+  function addTag() {
+    const tagInput = document.getElementById('tagInput');
+    const tagList = document.getElementById('tagList');
+    const tagValue = tagInput.value.trim();
+
+    if (tagValue !== "") {
+      const tag = document.createElement('span');
+      tag.className = "bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm";
+      tag.innerText = tagValue;
+      tagList.appendChild(tag);
+      tagInput.value = "";
+    }
+  }
+
+  const skillsForm = document.getElementById('skillsForm');
+  if (skillsForm) {
+    skillsForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const skills = document.getElementById('skillsInput').value;
+      alert("Skills saved: " + skills);
+    });
+  }
+
+  // Expose previewProfile and addTag to global scope if needed in HTML
+  window.previewProfile = previewProfile;
+  window.addTag = addTag;
+});
+
+
+  // user dashboard
+
+
+
+
+
+
+  
+
+
+
+
+ 
+
+  

@@ -67,12 +67,12 @@
           </svg>
         </button>
 
-        <button class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-label="Messages">
+        <!-- <button class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-label="Messages">
        
           <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h8m-6 4h6" />
           </svg>
-        </button>
+        </button> -->
 
     
         <button id="dark-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-pressed="false" aria-label="Toggle dark mode">
@@ -245,13 +245,12 @@
 
 
 
-
-
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
 
 <script>
-  const sidebar = document.getElementById('sidebar');
+    const sidebar = document.getElementById('sidebar');
   const toggleBtn = document.getElementById('toggleSidebar');
   const overlay = document.getElementById('overlay');
 
@@ -265,6 +264,7 @@
     overlay.classList.add('hidden');
   });
 </script>
+
   <script>
     // Display today's date in two places
     const today = new Date();
@@ -380,10 +380,10 @@
       if (evening) document.getElementById("eveningReport").value = evening;
     });
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <script>
-    const ctx = document.getElementById('progressChart').getContext('2d');
+
+<script>
+      const ctx = document.getElementById('progressChart').getContext('2d');
 const progressChart = new Chart(ctx, {
   type: 'bar',
   data: {
@@ -404,7 +404,12 @@ const progressChart = new Chart(ctx, {
   }
 });
 
-  </script>
+</script>
+
+
+
+
+ 
   <script src="./static/js/script.js"></script>
 
 </body>
