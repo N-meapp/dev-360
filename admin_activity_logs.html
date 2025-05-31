@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dev360</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+
+    tailwind.config = {
+      darkMode: 'class'
+    };
+  </script>
+</head>
+<body class=" dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen flex">
+
+  
+<button id="toggleSidebar" class="md:hidden fixed top-4 left-4 z-50 p-2 rounded bg-[#031A4C] text-white">
+  ☰
+</button>
+
+
+<aside id="sidebar" class="w-64 bg-[#031A4C] text-white dark:bg-gray-800 dark:text-gray-200 border-r border-white dark:border-gray-700 flex flex-col fixed top-0 left-0 bottom-0 z-40 transform -translate-x-full transition-transform duration-300 md:translate-x-0">
+  <div class="p-6 text-2xl font-bold border-b border-white dark:border-gray-700">
+    Dev360 Admin
+  </div>
+  <nav class="flex-grow overflow-y-auto" aria-label="Sidebar Navigation">
+     <ul class="mt-4 space-y-1">
+      <li><a href="admin_dashboard.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md font-semibold">Dashboard</a></li>
+      <li><a href="admin_team_view.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Team View</a></li>
+      <li><a href="admin_task_manager.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Task Manager</a></li>
+      <li><a href="admin_project_tracker.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Project Tracker</a></li>
+      <li><a href="admin_activity_logs.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Activity Logs</a></li>
+      <li><a href="admin_analytics.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Analytics</a></li>
+      <li><a href="admin_reports.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Reports</a></li>
+      <li><a href="admin_knowledge_base.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Knowledge Base</a></li>
+      <li><a href="admin_messages.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Messages / Chat</a></li>
+      <li><a href="admin_panel.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Admin Panel</a></li>
+      <li><a href="admin_settings.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Settings</a></li>
+    </ul>
+  </nav>
+</aside>
+   
+
+
+  <div class="flex-1 flex flex-col ml-64 max-md:ml-0">
+
+    <header class="flex items-center justify-between bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 h-16 fixed top-0 left-64 right-0 z-40">
+    
+      <div class="flex-1 max-w-lg">
+        <input
+          type="search"
+          placeholder="Search tasks, docs, messages..."
+          class="w-full py-2 px-4 rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-gray-100"
+          aria-label="Search tasks, documents, messages"
+        />
+      </div>
+
+     
+      <div class="flex items-center space-x-4 mr-6">
+        
+        <button id="openRequestModal" class="px-4 py-2 bg-[#031A4C] text-white rounded-lg hover:bg-blue-700 transition" aria-haspopup="dialog">Send Request</button>
+      </div>
+
+  
+      <div class="flex items-center space-x-4">
+        <button class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-label="Notifications">
+         
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+          </svg>
+        </button>
+
+        <!-- <button class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-label="Messages">
+       
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h8m-6 4h6" />
+          </svg>
+        </button> -->
+
+    
+        <button id="dark-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-pressed="false" aria-label="Toggle dark mode">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M17.293 13.293a8 8 0 11-10.586-10.586 8 8 0 0010.586 10.586z" />
+          </svg>
+        </button>
+
+        <div class="relative">
+          <button id="user-menu-button" class="flex items-center focus:outline-none rounded-full hover:ring-2 hover:ring-blue-500" aria-haspopup="true" aria-expanded="false" aria-label="User menu">
+            <img class="w-9 h-9 rounded-full" src="https://i.pravatar.cc/40" alt="User avatar" />
+          </button>
+      
+          <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50" role="menu" aria-label="User menu dropdown">
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem" tabindex="-1">View Profile</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem" tabindex="-1">Settings</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem" tabindex="-1">Help</a>
+            <hr class="border-gray-200 dark:border-gray-700" />
+            <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-100 dark:hover:bg-red-700 dark:hover:text-red-300" role="menuitem" tabindex="-1">Logout</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+
+
+
+
+
+<div class="px-10 mt-28 mb-6 flex justify-between items-center">
+  <h2 class="text-2xl font-semibold">Developer Activity Logs</h2>
+  <button onclick="window.print()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+    📤 Export/Share as PDF
+  </button>
+</div>
+
+
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 px-10 mb-6">
+ 
+  <div class="p-4 border rounded-xl shadow-sm flex items-center">
+    <div class="p-3 border border-purple-300 text-purple-600 rounded-full">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 5h18M9 3v2m6-2v2M4 9h16M4 15h16M4 21h16" />
+      </svg>
+    </div>
+    <div class="ml-4">
+      <h3 class="text-gray-500 text-sm">📊 Most Used App Today</h3>
+      <p class="text-xl font-bold">VS Code</p>
+    </div>
+  </div>
+
+
+  <div class="p-4 border rounded-xl shadow-sm flex items-center">
+    <div class="p-3 border border-blue-300 text-blue-600 rounded-full">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20h6M9 12a4 4 0 10-6 0a4 4 0 006 0zm10-4a4 4 0 11-8 0a4 4 0 018 0z" />
+      </svg>
+    </div>
+    <div class="ml-4">
+      <h3 class="text-gray-500 text-sm">👤 Active Developers Today</h3>
+      <p class="text-xl font-bold">18</p>
+    </div>
+  </div>
+</div>
+
+
+<div class="px-10 mt-8">
+  <h3 class="text-lg font-semibold mb-3">Today's Developer Activity</h3>
+  <div class="overflow-x-auto border rounded-lg shadow-sm">
+    <table class="min-w-full text-sm">
+      <thead>
+        <tr class="border-b">
+          <th class="text-left p-3 font-medium">
+        
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline h-5 w-5 mr-1 align-text-bottom text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 15c2.403 0 4.68.678 6.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-2m0 0a6 6 0 01-6-6v-1a6 6 0 0112 0v1a6 6 0 01-6 6z" />
+            </svg>
+            Developer
+          </th>
+          <th class="text-left p-3 font-medium">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline h-5 w-5 mr-1 align-text-bottom text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2" />
+            </svg>
+            Login Time
+          </th>
+          <th class="text-left p-3 font-medium">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline h-5 w-5 mr-1 align-text-bottom text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="16" rx="2" ry="2" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16 2v4M8 2v4M3 10h18" />
+            </svg>
+            Most Used App
+          </th>
+          <th class="text-left p-3 font-medium">
+           
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline h-5 w-5 mr-1 align-text-bottom text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7 7h10v10H7z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10 10h4v4h-4z" />
+            </svg>
+            Project Name
+          </th>
+          <th class="text-left p-3 font-medium">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" class="inline h-5 w-5 mr-1 align-text-bottom text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20 12h-2m-2 0h-4m-2 0H4m16-6h-2m-2 0h-4m-2 0H4m16 12h-2m-2 0h-4m-2 0H4" />
+            </svg>
+            Work Category
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="border-b ">
+          <td class="p-3 flex items-center gap-2">
+            <img src="https://i.pravatar.cc/30?img=1" class="rounded-full w-6 h-6" />
+            Jane Doe (Backend)
+          </td>
+          <td class="p-3">09:10 AM</td>
+          <td class="p-3">Postman</td>
+          <td class="p-3">Payment Gateway API</td>
+          <td class="p-3">
+            <span class="inline-block border border-green-300 text-green-700 text-xs px-2 py-1 rounded">Client Work</span>
+          </td>
+        </tr>
+        <tr class="border-b ">
+          <td class="p-3 flex items-center gap-2">
+            <img src="https://i.pravatar.cc/30?img=2" class="rounded-full w-6 h-6" />
+            John Smith (Frontend)
+          </td>
+          <td class="p-3">09:03 AM</td>
+          <td class="p-3">VS Code</td>
+          <td class="p-3">Developer Dashboard UI</td>
+          <td class="p-3">
+            <span class="inline-block border border-blue-300 text-blue-700 text-xs px-2 py-1 rounded">Company Work</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="p-3 flex items-center gap-2">
+            <img src="https://i.pravatar.cc/30?img=3" class="rounded-full w-6 h-6" />
+            Aisha Khan (UI/UX)
+          </td>
+          <td class="p-3">10:02 AM</td>
+          <td class="p-3">Figma</td>
+          <td class="p-3">Landing Page Templates</td>
+          <td class="p-3">
+            <span class="inline-block border border-yellow-300 text-yellow-700 text-xs px-2 py-1 rounded">Template</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="./static/js/script.js"></script>
+
+</body>
+</html>

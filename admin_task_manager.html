@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dev360</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+
+    tailwind.config = {
+      darkMode: 'class'
+    };
+  </script>
+</head>
+<body class=" dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen flex">
+
+  
+<button id="toggleSidebar" class="md:hidden fixed top-4 left-4 z-50 p-2 rounded bg-[#031A4C] text-white">
+  ☰
+</button>
+
+
+<aside id="sidebar" class="w-64 bg-[#031A4C] text-white dark:bg-gray-800 dark:text-gray-200 border-r border-white dark:border-gray-700 flex flex-col fixed top-0 left-0 bottom-0 z-40 transform -translate-x-full transition-transform duration-300 md:translate-x-0">
+  <div class="p-6 text-2xl font-bold border-b border-white dark:border-gray-700">
+    Dev360 Admin
+  </div>
+  <nav class="flex-grow overflow-y-auto" aria-label="Sidebar Navigation">
+     <ul class="mt-4 space-y-1">
+      <li><a href="admin_dashboard.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md font-semibold">Dashboard</a></li>
+      <li><a href="admin_team_view.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Team View</a></li>
+      <li><a href="admin_task_manager.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Task Manager</a></li>
+      <li><a href="admin_project_tracker.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Project Tracker</a></li>
+      <li><a href="admin_activity_logs.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Activity Logs</a></li>
+      <li><a href="admin_analytics.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Analytics</a></li>
+      <li><a href="admin_reports.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Reports</a></li>
+      <li><a href="admin_knowledge_base.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Knowledge Base</a></li>
+      <li><a href="admin_messages.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Messages / Chat</a></li>
+      <li><a href="admin_panel.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Admin Panel</a></li>
+      <li><a href="admin_settings.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Settings</a></li>
+    </ul>
+  </nav>
+</aside>
+   
+
+
+  <div class="flex-1 flex flex-col ml-64 max-md:ml-0">
+
+    <header class="flex items-center justify-between bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 h-16 fixed top-0 left-64 right-0 z-40">
+    
+      <div class="flex-1 max-w-lg">
+        <input
+          type="search"
+          placeholder="Search tasks, docs, messages..."
+          class="w-full py-2 px-4 rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-gray-100"
+          aria-label="Search tasks, documents, messages"
+        />
+      </div>
+
+     
+      <div class="flex items-center space-x-4 mr-6">
+        
+        <button id="openRequestModal" class="px-4 py-2 bg-[#031A4C] text-white rounded-lg hover:bg-blue-700 transition" aria-haspopup="dialog">Send Request</button>
+      </div>
+
+  
+      <div class="flex items-center space-x-4">
+        <button class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-label="Notifications">
+         
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+          </svg>
+        </button>
+
+        <!-- <button class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-label="Messages">
+       
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h8m-6 4h6" />
+          </svg>
+        </button> -->
+
+    
+        <button id="dark-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-pressed="false" aria-label="Toggle dark mode">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M17.293 13.293a8 8 0 11-10.586-10.586 8 8 0 0010.586 10.586z" />
+          </svg>
+        </button>
+
+        <div class="relative">
+          <button id="user-menu-button" class="flex items-center focus:outline-none rounded-full hover:ring-2 hover:ring-blue-500" aria-haspopup="true" aria-expanded="false" aria-label="User menu">
+            <img class="w-9 h-9 rounded-full" src="https://i.pravatar.cc/40" alt="User avatar" />
+          </button>
+      
+          <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50" role="menu" aria-label="User menu dropdown">
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem" tabindex="-1">View Profile</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem" tabindex="-1">Settings</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem" tabindex="-1">Help</a>
+            <hr class="border-gray-200 dark:border-gray-700" />
+            <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-100 dark:hover:bg-red-700 dark:hover:text-red-300" role="menuitem" tabindex="-1">Logout</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+
+
+
+
+<div class="max-w-7xl mx-auto p-6 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen mt-20">
+
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
+    <h1 class="text-3xl font-bold">Task Manager</h1>
+    <div class="flex gap-2">
+      <button class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">➕ Create New Task</button>
+      <button class="px-4 py-2 bg-gray-300 dark:bg-gray-700 text-gray-900 dark:text-white rounded hover:bg-gray-400 dark:hover:bg-gray-600 text-sm">📄 Use Task Template</button>
+    </div>
+  </div>
+
+
+  <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
+    <select class="px-3 py-2 rounded border dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+      <option>Filter by Assignee</option>
+    </select>
+    <select class="px-3 py-2 rounded border dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+      <option>Filter by Project</option>
+    </select>
+    <select class="px-3 py-2 rounded border dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+      <option>Status</option>
+      <option>To Do</option>
+      <option>In Progress</option>
+      <option>Completed</option>
+      <option>Blocked</option>
+    </select>
+    <select class="px-3 py-2 rounded border dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+      <option>Priority</option>
+      <option>High</option>
+      <option>Medium</option>
+      <option>Low</option>
+    </select>
+    <input type="date" class="px-3 py-2 rounded border dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white" placeholder="From">
+    <input type="date" class="px-3 py-2 rounded border dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-white" placeholder="To">
+  </div>
+
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+    <div class="p-4 bg-white dark:bg-gray-800 rounded shadow">
+      <h3 class="text-sm font-semibold">Total Tasks</h3>
+      <p class="text-xl font-bold">32</p>
+    </div>
+    <div class="p-4 bg-white dark:bg-gray-800 rounded shadow">
+      <h3 class="text-sm font-semibold">Overdue Tasks</h3>
+      <p class="text-xl font-bold text-red-500">5</p>
+    </div>
+    <div class="p-4 bg-white dark:bg-gray-800 rounded shadow">
+      <h3 class="text-sm font-semibold">Near Deadline</h3>
+      <p class="text-xl font-bold text-yellow-500">4</p>
+    </div>
+    <div class="p-4 bg-white dark:bg-gray-800 rounded shadow">
+      <h3 class="text-sm font-semibold">Completed</h3>
+      <p class="text-xl font-bold text-green-500">18</p>
+    </div>
+  </div>
+
+  
+  <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow">
+    <table class="min-w-full">
+      <thead class="bg-gray-100 dark:bg-gray-700">
+        <tr>
+          <th class="px-4 py-3 text-left text-xs font-medium uppercase">📋 Task Title</th>
+          <th class="px-4 py-3 text-left text-xs font-medium uppercase">👤 Assignee</th>
+          <th class="px-4 py-3 text-left text-xs font-medium uppercase">⏳ Status</th>
+          <th class="px-4 py-3 text-left text-xs font-medium uppercase">🚦 Priority</th>
+          <th class="px-4 py-3 text-left text-xs font-medium uppercase">📅 Deadline</th>
+          <th class="px-4 py-3 text-left text-xs font-medium uppercase">📁 Project</th>
+          
+          <th class="px-4 py-3 text-left text-xs font-medium uppercase">🕵️ Created By</th>
+         
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+        <tr>
+          <td class="px-4 py-3">Implement Login</td>
+          <td class="px-4 py-3 flex items-center gap-2">
+            <img src="https://i.pravatar.cc/30?u=user1" class="rounded-full" /> Alex
+          </td>
+          <td class="px-4 py-3 text-blue-600">In Progress</td>
+          <td class="px-4 py-3 text-red-600">High</td>
+          <td class="px-4 py-3">2025-06-03</td>
+          <td class="px-4 py-3">Authentication</td>
+          
+          <td class="px-4 py-3">Sarah / 2025-05-29</td>
+          
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <div id="taskDetailModal" class="hidden">Task Detail Modal</div>
+  <div id="taskEditModal" class="hidden">Create/Edit Task Modal</div>
+  <div id="taskTemplatePanel" class="hidden">Task Templates Panel</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <script src="./static/js/script.js"></script>
+
+</body>
+</html>

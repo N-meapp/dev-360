@@ -180,14 +180,109 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+// admin dashboard
 
-
-
+const todaySpan = document.getElementById('todayDate');
+  if (todaySpan) {
+    const today = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    todaySpan.textContent = today.toLocaleDateString(undefined, options);
+  }
   
+
+
+
+  // team view admin
+  let sortAsc = true;
+
+  function filterTable() {
+    const search = document.getElementById("searchInput").value.toLowerCase();
+    const team = document.getElementById("teamFilter").value;
+    const status = document.getElementById("statusFilter").value;
+    const role = document.getElementById("roleFilter").value;
+
+    const rows = document.querySelectorAll("#developersTable tbody tr");
+    rows.forEach(row => {
+      const name = row.dataset.name.toLowerCase();
+      const rowTeam = row.dataset.team;
+      const rowStatus = row.dataset.status;
+      const rowRole = row.dataset.role;
+
+      const matchesSearch = name.includes(search);
+      const matchesTeam = !team || rowTeam === team;
+      const matchesStatus = !status || rowStatus === status;
+      const matchesRole = !role || rowRole === role;
+
+      if (matchesSearch && matchesTeam && matchesStatus && matchesRole) {
+        row.style.display = "";
+      } else {
+        row.style.display = "none";
+      }
+    });
+  }
+
+  function sortTable() {
+    const table = document.getElementById("developersTable");
+    const tbody = table.tBodies[0];
+    const rows = Array.from(tbody.rows);
+    const sortBy = document.getElementById("sortSelect").value;
+
+    if (!sortBy) return;
+
+    rows.sort((a, b) => {
+      let aVal, bVal;
+
+      switch (sortBy) {
+        case "name":
+          aVal = a.dataset.name.toLowerCase();
+          bVal = b.dataset.name.toLowerCase();
+          break;
+        case "status":
+          aVal = a.dataset.status.toLowerCase();
+          bVal = b.dataset.status.toLowerCase();
+          break;
+        case "activeCodingTime":
+          aVal = parseTimeToMinutes(a.cells[4].textContent.trim());
+          bVal = parseTimeToMinutes(b.cells[4].textContent.trim());
+          break;
+        case "lastCheckIn":
+          aVal = new Date(a.dataset.lastcheckin);
+          bVal = new Date(b.dataset.lastcheckin);
+          break;
+        default:
+          aVal = "";
+          bVal = "";
+      }
+
+      if (aVal < bVal) return sortAsc ? -1 : 1;
+      if (aVal > bVal) return sortAsc ? 1 : -1;
+      return 0;
+    });
+
+    rows.forEach(row => tbody.appendChild(row));
+  }
+
+  function parseTimeToMinutes(timeStr) {
+    const parts = timeStr.match(/(\d+)h\s*(\d+)?m?/);
+    if (!parts) return 0;
+    const hours = parseInt(parts[1]) || 0;
+    const minutes = parseInt(parts[2]) || 0;
+    return hours * 60 + minutes;
+  }
+
+  function toggleSortDirection() {
+    sortAsc = !sortAsc;
+    document.getElementById("sortToggle").textContent = sortAsc ? "⬆️ Asc" : "⬇️ Desc";
+    sortTable();
+  }
 
 
 
 
  
+// admin project tracker
 
+ function openProjectForm() {
+    document.getElementById('projectForm').classList.toggle('hidden');
+  }
   
