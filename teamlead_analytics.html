@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dev360</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+
+    tailwind.config = {
+      darkMode: 'class'
+    };
+  </script>
+</head>
+<body class=" dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen flex">
+
+  
+<button id="toggleSidebar" class="md:hidden fixed top-4 left-4 z-50 p-2 rounded bg-[#031A4C] text-white">
+  ☰
+</button>
+
+
+<aside id="sidebar" class="w-64 bg-[#031A4C] text-white dark:bg-gray-800 dark:text-gray-200 border-r border-white dark:border-gray-700 flex flex-col fixed top-0 left-0 bottom-0 z-40 transform -translate-x-full transition-transform duration-300 md:translate-x-0">
+  <div class="p-6 text-2xl font-bold border-b border-white dark:border-gray-700">
+    Dev360 Admin
+  </div>
+  <nav class="flex-grow overflow-y-auto" aria-label="Sidebar Navigation">
+        <ul class="mt-4 space-y-1">
+      <li><a href="teamlead_dashboard.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md font-semibold">Dashboard</a></li>
+      <li><a href="teamlead_team_view.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Team View</a></li>
+      <li><a href="teamlead_task_manager.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Task Manager</a></li>
+      <li><a href="teamlead_project_tracker.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Project Tracker</a></li>
+      <li><a href="teamlead_activity_logs.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Activity Logs</a></li>
+      <li><a href="teamlead_analytics.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Analytics</a></li>
+      <li><a href="teamlead_reports.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Reports</a></li>
+      <li><a href="teamlead_knowledge_base.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Knowledge Base</a></li>
+      <li><a href="teamlead_messages.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Messages / Chat</a></li>
+      
+    </ul>
+  </nav>
+</aside>
+   
+
+
+  <div class="flex-1 flex flex-col ml-64 max-md:ml-0">
+
+    <header class="flex items-center justify-between bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 h-16 fixed top-0 left-64 right-0 z-40">
+    
+      <div class="flex-1 max-w-lg">
+        <input
+          type="search"
+          placeholder="Search tasks, docs, messages..."
+          class="w-full py-2 px-4 rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-gray-100"
+          aria-label="Search tasks, documents, messages"
+        />
+      </div>
+
+     
+      <div class="flex items-center space-x-4 mr-6">
+        
+        <button id="openRequestModal" class="px-4 py-2 bg-[#031A4C] text-white rounded-lg hover:bg-blue-700 transition" aria-haspopup="dialog">Send Request</button>
+      </div>
+
+  
+      <div class="flex items-center space-x-4">
+        <button class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-label="Notifications">
+         
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+          </svg>
+        </button>
+
+        <!-- <button class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-label="Messages">
+       
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h8m-6 4h6" />
+          </svg>
+        </button> -->
+
+    
+        <button id="dark-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-pressed="false" aria-label="Toggle dark mode">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M17.293 13.293a8 8 0 11-10.586-10.586 8 8 0 0010.586 10.586z" />
+          </svg>
+        </button>
+
+        <div class="relative">
+          <button id="user-menu-button" class="flex items-center focus:outline-none rounded-full hover:ring-2 hover:ring-blue-500" aria-haspopup="true" aria-expanded="false" aria-label="User menu">
+            <img class="w-9 h-9 rounded-full" src="https://i.pravatar.cc/40" alt="User avatar" />
+          </button>
+      
+          <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50" role="menu" aria-label="User menu dropdown">
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem" tabindex="-1">View Profile</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem" tabindex="-1">Settings</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem" tabindex="-1">Help</a>
+            <hr class="border-gray-200 dark:border-gray-700" />
+            <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-100 dark:hover:bg-red-700 dark:hover:text-red-300" role="menuitem" tabindex="-1">Logout</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+
+
+
+    <!-- Developer Performance Comparison -->
+<div class="px-10 mb-10 mt-32">
+  <h3 class="text-lg font-semibold mb-3">Developer Performance Comparison</h3>
+  <div class="overflow-x-auto border rounded-lg shadow-sm">
+    <table class="min-w-full text-sm text-left">
+      <thead class="bg-gray-100 text-gray-700">
+        <tr>
+          <th class="p-3">Developer</th>
+          <th class="p-3">Coding Time</th>
+          <th class="p-3">Idle Time</th>
+          <th class="p-3">Tasks Completed</th>
+          <th class="p-3">Missed Updates</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        <tr>
+          <td class="p-3 font-medium">Jane Doe</td>
+          <td class="p-3">6h 20m</td>
+          <td class="p-3">40m</td>
+          <td class="p-3">8</td>
+          <td class="p-3">1</td>
+        </tr>
+        <tr>
+          <td class="p-3 font-medium">John Smith</td>
+          <td class="p-3">5h 50m</td>
+          <td class="p-3">1h 10m</td>
+          <td class="p-3">6</td>
+          <td class="p-3">2</td>
+        </tr>
+        <tr>
+          <td class="p-3 font-medium">Sara Ali</td>
+          <td class="p-3">7h 05m</td>
+          <td class="p-3">30m</td>
+          <td class="p-3">9</td>
+          <td class="p-3">0</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+
+
+
+
+    <script src="./static/js/script.js"></script>
+
+</body>
+</html>

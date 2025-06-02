@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dev360</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+
+    tailwind.config = {
+      darkMode: 'class'
+    };
+  </script>
+</head>
+<body class=" dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen flex">
+
+  
+<button id="toggleSidebar" class="md:hidden fixed top-4 left-4 z-50 p-2 rounded bg-[#031A4C] text-white">
+  ☰
+</button>
+
+
+<aside id="sidebar" class="w-64 bg-[#031A4C] text-white dark:bg-gray-800 dark:text-gray-200 border-r border-white dark:border-gray-700 flex flex-col fixed top-0 left-0 bottom-0 z-40 transform -translate-x-full transition-transform duration-300 md:translate-x-0">
+  <div class="p-6 text-2xl font-bold border-b border-white dark:border-gray-700">
+    Dev360 Admin
+  </div>
+  <nav class="flex-grow overflow-y-auto" aria-label="Sidebar Navigation">
+       <ul class="mt-4 space-y-1">
+      <li><a href="teamlead_dashboard.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md font-semibold">Dashboard</a></li>
+      <li><a href="teamlead_team_view.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Team View</a></li>
+      <li><a href="teamlead_task_manager.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Task Manager</a></li>
+      <li><a href="teamlead_project_tracker.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Project Tracker</a></li>
+      <li><a href="teamlead_activity_logs.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Activity Logs</a></li>
+      <li><a href="teamlead_analytics.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Analytics</a></li>
+      <li><a href="teamlead_reports.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Reports</a></li>
+      <li><a href="teamlead_knowledge_base.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Knowledge Base</a></li>
+      <li><a href="teamlead_messages.html" class="flex items-center px-6 py-3 hover:bg-blue-700 rounded-md">Messages / Chat</a></li>
+      
+    </ul>
+  </nav>
+</aside>
+   
+
+
+  <div class="flex-1 flex flex-col ml-64 max-md:ml-0">
+
+    <header class="flex items-center justify-between bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 h-16 fixed top-0 left-64 right-0 z-40">
+    
+      <div class="flex-1 max-w-lg">
+        <input
+          type="search"
+          placeholder="Search tasks, docs, messages..."
+          class="w-full py-2 px-4 rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-gray-100"
+          aria-label="Search tasks, documents, messages"
+        />
+      </div>
+
+     
+      <div class="flex items-center space-x-4 mr-6">
+        
+        <button id="openRequestModal" class="px-4 py-2 bg-[#031A4C] text-white rounded-lg hover:bg-blue-700 transition" aria-haspopup="dialog">Send Request</button>
+      </div>
+
+  
+      <div class="flex items-center space-x-4">
+        <button class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-label="Notifications">
+         
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+          </svg>
+        </button>
+
+        <!-- <button class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-label="Messages">
+       
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h8m-6 4h6" />
+          </svg>
+        </button> -->
+
+    
+        <button id="dark-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700" aria-pressed="false" aria-label="Toggle dark mode">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M17.293 13.293a8 8 0 11-10.586-10.586 8 8 0 0010.586 10.586z" />
+          </svg>
+        </button>
+
+        <div class="relative">
+          <button id="user-menu-button" class="flex items-center focus:outline-none rounded-full hover:ring-2 hover:ring-blue-500" aria-haspopup="true" aria-expanded="false" aria-label="User menu">
+            <img class="w-9 h-9 rounded-full" src="https://i.pravatar.cc/40" alt="User avatar" />
+          </button>
+      
+          <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50" role="menu" aria-label="User menu dropdown">
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem" tabindex="-1">View Profile</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem" tabindex="-1">Settings</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem" tabindex="-1">Help</a>
+            <hr class="border-gray-200 dark:border-gray-700" />
+            <a href="#" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-100 dark:hover:bg-red-700 dark:hover:text-red-300" role="menuitem" tabindex="-1">Logout</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+
+
+
+
+
+
+
+
+
+<div class="flex flex-col h-screen bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+
+ 
+  <div class="h-16 px-6 flex items-center justify-between border-b border-gray-300 dark:border-gray-700">
+    <div class="flex items-center space-x-2">
+      <span class="text-lg font-semibold">#FrontendTeam</span>
+      <span class="w-2 h-2 bg-green-500 rounded-full" title="Online"></span>
+    </div>
+    <div class="space-x-3 text-sm">
+      <button class="hover:underline">View Profile</button>
+      <button class="hover:underline">Mute</button>
+      <button class="hover:underline">Add Members</button>
+      <button class="hover:underline">Leave</button>
+    </div>
+  </div>
+
+
+  <div class="flex-1 overflow-y-auto p-6 space-y-6">
+  
+    <div class="flex items-start space-x-3">
+      <img src="https://i.pravatar.cc/40" class="w-10 h-10 rounded-full" alt="user" />
+      <div>
+        <div class="text-sm font-semibold">Alice <span class="text-xs text-gray-500">10:45 AM</span></div>
+        <div class="text-sm mt-1">Hey team, the frontend PR is live!</div>
+        <div class="text-xs text-blue-500 mt-1 space-x-2">👍 ❤️ ✅</div>
+      </div>
+    </div>
+
+    <div class="flex items-start space-x-3">
+      <img src="https://i.pravatar.cc/40?img=5" class="w-10 h-10 rounded-full" alt="user" />
+      <div>
+        <div class="text-sm font-semibold">Bob <span class="text-xs text-gray-500">10:47 AM</span></div>
+        <div class="text-sm mt-1">Nice work! Also, here's the code snippet:</div>
+        <pre class="bg-gray-800 text-white text-sm p-3 rounded mt-2 overflow-x-auto">
+<code>function greet(name) {
+  return `Hello, ${name}!`;
+}</code>
+        </pre>
+      </div>
+    </div>
+  </div>
+
+  
+
+
+
+<div class="border-t border-gray-300 dark:border-gray-700 p-4 flex items-center space-x-3">
+
+  <button title="Attach File" class="text-gray-600 dark:text-gray-300">
+    <i data-lucide="paperclip" class="w-5 h-5"></i>
+  </button>
+
+ 
+  <input
+    type="text"
+    placeholder="Type your message..."
+    class="flex-1 px-4 py-2 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:outline-none"
+  />
+
+ 
+  <button title="Emoji" class="text-gray-600 dark:text-gray-300">😊</button>
+
+
+  <button title="Audio" class="text-gray-600 dark:text-gray-300">
+    <i data-lucide="mic" class="w-5 h-5"></i>
+  </button>
+
+  
+  <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Send</button>
+</div>
+
+
+
+
+  
+</div>
+
+
+
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+  lucide.createIcons();
+</script>
+
+    
+    
+    </div>
+
+
+
+
+    <script src="./static/js/script.js"></script>
+
+</body>
+</html>
